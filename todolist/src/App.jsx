@@ -11,6 +11,10 @@ function App() {
     setTodos([...todos, entry]);
   }
 
+  const deleteTodo = (index) => {
+    setTodos(todos.filter((todo, i) => i !== index));
+  }
+
   return (
     <>
       <h1>To Do List</h1>
@@ -30,6 +34,7 @@ function App() {
             <tr key={index}>
               <td>{todo.date}</td>
               <td>{todo.description}</td>
+              <td><button id="del-button" onClick={() => deleteTodo(index)}>Delete</button> </td>
             </tr>
           ))}
         </tbody>
