@@ -1,13 +1,13 @@
 import './App.css';
-import Todolist from './Todolist';
+import Container from '@mui/material/Container';
+import NavTabs from './Tabs';
 
 export default function App() {
 
   return (
-    <>
-      <h1>To Do List</h1>
-      <Todolist />
-    </>
+    <Container maxWidth="xl">
+      <NavTabs />
+    </Container>
   );
 }
 

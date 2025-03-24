@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { AllCommunityModule, ModuleRegistry, themeBalham } from 'ag-grid-community';
+import { AllCommunityModule, ModuleRegistry, themeMaterial } from 'ag-grid-community';
 import { AgGridReact } from "ag-grid-react";
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -26,27 +26,24 @@ export default function TodoTable(props) {
 
     const defaultColDef = {
         filter: true,
-        floatingFilter: true,
         animateRows: true,
-        flex: 1
+        flex: 1,
     };
 
     return (
-        <>
+        <div id="ag-grid-table">
             {props.todos.length > 0 &&
-                <div id='ag-grid-table'>
-                    <AgGridReact
-                        theme={themeBalham}
-                        headerHeight={40}
-                        ref={props.gridRef}
-                        onGridReady={params => props.gridRef.current = params.api}
-                        rowData={props.todos}
-                        columnDefs={columnDefs}
-                        rowSelection={{ mode: "singleRow" }}
-                        defaultColDef={defaultColDef}
-                    />
-                </div>
+                <AgGridReact
+                    theme={themeMaterial}
+                    headerHeight={40}
+                    ref={props.gridRef}
+                    onGridReady={params => props.gridRef.current = params.api}
+                    rowData={props.todos}
+                    columnDefs={columnDefs}
+                    rowSelection={{ mode: "singleRow" }}
+                    defaultColDef={defaultColDef}
+                />
             }
-        </>
-    )
+        </div>
+    );
 }
