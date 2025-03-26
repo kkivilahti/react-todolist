@@ -3,19 +3,29 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
+
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+
 import TodoTable from './TodoTable';
 
 export default function Todolist() {
-    const [entry, setEntry] = useState({ description: '', date: '', priority: 'low' });
+    const [entry, setEntry] = useState({ description: '', date: dayjs(), priority: 'low' });
     const [todos, setTodos] = useState([]);
     const gridRef = useRef();
 
+    const handleDateChange = (newDate) => {
+        setEntry({ ... entry, date: newDate });
+    }
+
     const addTodo = () => {
-        if (entry.description !== '' && entry.date !== '') {
-            setTodos([...todos, entry]);
-            setEntry({ description: '', date: '', priority: 'low' });
-        } else {
+        if (!entry.description || !entry.date || !entry.priority) {
             alert("Please fill all fields");
+        } else {
+            setTodos([...todos, entry]);
+            setEntry({ description: '', date: dayjs(), priority: 'low' });
         }
     };
 
@@ -44,21 +54,21 @@ export default function Todolist() {
                     value={entry.description}
                     onChange={(e) => setEntry({ ...entry, description: e.target.value })}
                 />
-                <TextField
-                    label="Date"
-                    id="date"
-                    size="small"
-                    type="date"
-                    slotProps={{ inputLabel: { shrink: true }}}
-                    sx={{ width: 150 }}
-                    value={entry.date}
-                    onChange={(e) => setEntry({ ...entry, date: e.target.value })}
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Date"
+                        format="DD/MM/YYYY"
+                        slotProps={{ textField: { size: "small"} }}
+                        sx={{ width: 200 }}
+                        value={entry.date}
+                        onChange={handleDateChange}
+                    />
+                </LocalizationProvider>
                 <TextField
                     label="Priority"
                     id="priority"
                     size="small"
-                    sx={{ width: 150 }}
+                    sx={{ width: 200 }}
                     value={entry.priority}
                     onChange={(e) => setEntry({ ...entry, priority: e.target.value })}
                     select

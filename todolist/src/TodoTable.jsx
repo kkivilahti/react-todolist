@@ -1,15 +1,16 @@
 import { useState } from "react";
+import dayjs from "dayjs";
 
 import { AllCommunityModule, ModuleRegistry, themeMaterial } from 'ag-grid-community';
 import { AgGridReact } from "ag-grid-react";
+
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 export default function TodoTable(props) {
 
     const dateStr = (date) => {
-        const d = new Date(date);
-        return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+        return dayjs(date).format("D.M.YYYY");
     };
 
     const [columnDefs] = useState([
@@ -27,7 +28,7 @@ export default function TodoTable(props) {
     const defaultColDef = {
         filter: true,
         animateRows: true,
-        flex: 1,
+        flex: 1
     };
 
     return (
